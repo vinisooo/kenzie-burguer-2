@@ -20,9 +20,6 @@ const UserProvider = ({children}: iUserProviderProps)=>{
     const navigate = useNavigate();
 
     const [ user, setUser ] = useState({});
-
-    console.log("user context")
-
     //LOGIN
     const login = async(data: object)=>{
         try{

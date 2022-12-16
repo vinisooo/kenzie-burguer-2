@@ -3,34 +3,40 @@ import { useNavigate } from "react-router-dom";
 import { kenzieBurguerAPI } from "../api/kenzieBurguerApi";
 
 
+interface iProduct{
+    id: number;
+    name: string;
+    category: string;
+    price: number;
+    imbg: string;
+}
+
 interface iExportsValues{
-    products: any;
-    getProducts: (token: string)=> void;
+    products: iProduct[];
+    cartProducts: iProduct[];
+    addToCart: (product: iProduct)=>void;
 }
 
 interface iMenuProvider{
     children: React.ReactNode;
 }
 
-export const MenuContext = createContext({});
+export const MenuContext = createContext({} as iExportsValues);
 
 const MenuProvider = ({children}: iMenuProvider)=>{
 
     const navigate = useNavigate();
-    
-    console.log("menu context")
 
-    const [ products, setProducts ] = useState([]);
+    const [ products, setProducts ] = useState([] as iProduct[]);
+    const [ cartProducts, setCartProducts ] = useState([] as iProduct[]);
 
     const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
-    console.log(token)
 
     useEffect(()=>{
         if(token){
             getProducts(token);
-            console.log(token)
         }
-    })
+    },[]);
 
     //GETTING PRODUCTS
     const getProducts = async(token: string)=>{
@@ -40,15 +46,21 @@ const MenuProvider = ({children}: iMenuProvider)=>{
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(request);
+            setProducts(request.data);
         }catch(err){
             console.log(err);
             navigate("/login");
         }
     }
 
+
+    //CART
+    const addToCart = (product: iProduct)=>{
+        setCartProducts([...cartProducts, product]);
+    }
+    
     return(
-        <MenuContext.Provider value={{}}>
+        <MenuContext.Provider value={{products, cartProducts, addToCart}}>
             {children}
         </MenuContext.Provider>
     )

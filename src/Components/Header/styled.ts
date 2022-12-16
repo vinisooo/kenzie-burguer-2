@@ -59,7 +59,7 @@ export const StyledHeader = styled.header`
         border-radius: 7px;
 
         color: var(--total-white);
-
+        font-weight: 700;
     }
 
     img{

@@ -8,17 +8,23 @@ import { useContext } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 
 const Menu = ()=>{
-
     
     const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
 
+    const { products } = useContext(MenuContext);
 
     return(
         <>
             <Header/>
             <Container>
                 <StyledUl>
-                    <Card product/>
+                    {
+                        products.map((el: object)=>{
+                            return(
+                                <Card product={el}/>
+                            )
+                        })
+                    }
                 </StyledUl>
             </Container>
         </>
