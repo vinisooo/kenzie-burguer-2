@@ -7,20 +7,13 @@ import React, { useContext } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 
 interface iProps{
-    product: iProduct
+    product: iProduct;
 }
 
 
 const CartCard = ({product}: iProps)=>{
 
-    const { cartProducts, addToCart, removeSameFromCart } = useContext(MenuContext)
-
-    const sameProduct = ()=>{
-        return cartProducts.filter((el: iProduct)=>{
-            return el.id === product.id;
-        }).length
-    }
-
+    const { cartProducts, addToCart, removeSameFromCart, removeFromCart } = useContext(MenuContext);
 
     return(
         <StyledCartCard>
@@ -35,8 +28,8 @@ const CartCard = ({product}: iProps)=>{
                     </button>
                 </div>
                 <footer>
-                    <button>-</button>
-                    <span>{sameProduct()}</span>
+                    <button onClick={()=>removeFromCart(product)}>-</button>
+                    <span>{product.counter}</span>
                     <button onClick={()=>addToCart(product)}>+</button>
                 </footer>
             </div>

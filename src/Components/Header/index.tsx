@@ -13,10 +13,12 @@ import leaveIcon from "../../assets/icon/leave-icon.svg";
 //CONTEXT
 import { useContext } from "react";
 import { MenuContext } from "../../Context/MenuContext";
+import { UserContext } from "../../Context/UserContext";
 
 const Header = ()=>{
 
     const { cartProducts, setCartModal } = useContext(MenuContext);
+    const { leaveProfile } = useContext(UserContext);
 
     return(
         <StyledHeader>
@@ -36,7 +38,7 @@ const Header = ()=>{
                         <img src={cartIcon} />
                         <span>{cartProducts.length}</span>
                     </button>
-                    <button>
+                    <button onClick={()=>leaveProfile()}>
                         <img src={leaveIcon}/>
                     </button>
                 </nav>

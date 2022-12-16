@@ -4,4 +4,6 @@ export interface iProduct{
     category: string;
     price: number;
     img: string;
+    cartID?: number;
+    counter: number;
 }

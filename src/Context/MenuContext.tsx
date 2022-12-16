@@ -12,6 +12,9 @@ interface iExportsValues{
     cartModal: boolean;
     setCartModal: React.Dispatch<React.SetStateAction<boolean>>
     removeSameFromCart: (product: iProduct) => void;
+    removeFromCart: (product: iProduct) =>void;
+    totalPrice: number;
+    removeAllFromCart: ()=> void;
 }
 
 interface iMenuProvider{
@@ -25,14 +28,19 @@ const MenuProvider = ({children}: iMenuProvider)=>{
     const navigate = useNavigate();
 
     const [ products, setProducts ] = useState([] as iProduct[]);
-    const [ cartProducts, setCartProducts ] = useState([] as iProduct[]);
-    const [ cartModal, setCartModal ] = useState<boolean>(false)
+
+    const [ cartProducts, setCartProducts ] = useState<iProduct[]>([]);
+    const [ cartModal, setCartModal ] = useState<boolean>(false);
+    const [ totalPrice, setTotalPrice ] = useState(0);
+    
+    const [ filter,setFilter ] = useState<string>("");
 
     const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
 
     useEffect(()=>{
         if(token){
             getProducts(token);
+            getTotalPrice();
         }
     },[]);
 
@@ -54,8 +62,26 @@ const MenuProvider = ({children}: iMenuProvider)=>{
 
     //CART
     const addToCart = (product: iProduct)=>{
-        setCartProducts([...cartProducts, product]);
+        // const cartID = cartProducts.length > 0? cartProducts[cartProducts.length -1].cartID + 1 : 0;
+
+
+        const auxArr = [...cartProducts]; 
+        const getProduct = auxArr.find((el)=>{
+            return el.id === product.id
+        })
+
+        if(getProduct){
+            getProduct.counter = getProduct.counter + 1;
+            
+        }else{
+            auxArr.push(product);
+        }
+        
+        setCartProducts(auxArr);
+
+        // getTotalPrice();
     }
+
 
     const removeSameFromCart = (product: iProduct)=>{
         setCartProducts(
@@ -63,10 +89,48 @@ const MenuProvider = ({children}: iMenuProvider)=>{
                 return el.id !== product.id
             })
         );
+        getTotalPrice();
     }
     
+
+    const removeFromCart = (product: iProduct)=>{
+        // setCartProducts(cartProducts.filter((el: iProduct)=>{
+        //     return el.cartID !== product.cartID;
+        // }))
+        const auxArr = [...cartProducts]; 
+        const getProduct = auxArr.find((el)=>{
+            return el.id === product.id
+        })
+
+        if(getProduct){
+            if(getProduct.counter > 1){
+                getProduct.counter = getProduct.counter - 1;
+
+                setCartProducts(auxArr);
+            }else{
+                removeSameFromCart(product)
+            }
+        }
+    }
+
+    const removeAllFromCart = ()=>{
+        setCartProducts([]);
+    }
+
+
+    const getTotalPrice = ()=>{
+        const priceCalc = cartProducts.map((a,b: any)=>{
+            return a + b.price
+        },0)
+
+        setTotalPrice(priceCalc);
+    }
+    useEffect(()=>{
+        getTotalPrice();
+    })
+
     return(
-        <MenuContext.Provider value={{products, cartProducts, addToCart, cartModal, setCartModal, removeSameFromCart}}>
+        <MenuContext.Provider value={{products, cartProducts, addToCart, cartModal, setCartModal, removeSameFromCart, totalPrice, removeFromCart, removeAllFromCart}}>
             {children}
         </MenuContext.Provider>
     )

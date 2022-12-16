@@ -3,7 +3,7 @@ import { ModalCart } from "./styled";
 import { StyledBtn } from "../../Styles/DefaultBtn";
 
 //CONTEXT
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 
 import CartCard from "../CartCard";
@@ -12,9 +12,9 @@ import { iProduct } from "../../DefaultInterfaces";
 
 const CartModal = ()=>{
 
-    const { cartProducts, setCartModal } = useContext(MenuContext);
+    const { cartProducts, setCartModal, totalPrice, removeAllFromCart } = useContext(MenuContext);
     
-    console.log(cartProducts.length)
+
     return(
         <StyledModalBG>
             <ModalCart>
@@ -35,16 +35,16 @@ const CartModal = ()=>{
                                 cartProducts.map((el: iProduct, index)=>{
                                     return(
                                         <CartCard key={index} product={el}/>
-                                    )  
+                                    )
                                 })
                             }
                         </ul>
                         <footer>
                             <div>
                                 <h4>Total</h4>
-                                <span>R$00</span>
+                                <span>R${totalPrice.toFixed(2)}</span>
                             </div>
-                            <StyledBtn size="100%">Remover Todos</StyledBtn>
+                            <StyledBtn onClick={()=>removeAllFromCart()} size="100%">Remover Todos</StyledBtn>
                         </footer>
                     </div>
                 }

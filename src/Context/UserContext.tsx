@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { kenzieBurguerAPI } from "../api/kenzieBurguerApi";
 
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 interface iExportValues{
     submitLogin: (data: object)=> void;
     submitRegister: (data: object)=> void;
+    leaveProfile: ()=> void;
 }
 
 interface iUserProviderProps{
@@ -20,6 +21,9 @@ const UserProvider = ({children}: iUserProviderProps)=>{
     const navigate = useNavigate();
 
     const [ user, setUser ] = useState({});
+
+
+
     //LOGIN
     const login = async(data: object)=>{
         try{
@@ -40,6 +44,7 @@ const UserProvider = ({children}: iUserProviderProps)=>{
         login(data)
     }
 
+
     //REGISTER
 
     const register = async(data: object)=>{
@@ -55,12 +60,19 @@ const UserProvider = ({children}: iUserProviderProps)=>{
         }
     }
 
+
     const submitRegister = (data: object)=>{
         register(data)
     }
 
+    //LEAVE PROFILE
+    const leaveProfile = ()=>{
+        localStorage.removeItem("@kenzie-burguer: logged-user-token");
+        navigate("/login")
+    }
+
     return(
-        <UserContext.Provider value={{submitLogin, submitRegister}}>
+        <UserContext.Provider value={{submitLogin, submitRegister, leaveProfile}}>
             {children}
         </UserContext.Provider>
     )

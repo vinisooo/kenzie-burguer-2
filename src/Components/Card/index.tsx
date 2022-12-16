@@ -16,6 +16,11 @@ const Card = ({product}: iProps)=>{
 
     const { cartProducts, addToCart } = useContext(MenuContext);
 
+    const addNewProduct = ()=>{
+        const newProduct = { ...product, counter: 1 };
+        addToCart(newProduct);
+    }
+
     return(
         <StyledCard>
             <figure>
@@ -25,7 +30,7 @@ const Card = ({product}: iProps)=>{
                 <h3>{product.name}</h3>
                 <p>{product.category}</p>
                 <span>R${product.price.toFixed(2)}</span>
-                <StyledBtn onClick={()=>addToCart(product)} size="50%" small color="green">Adicionar</StyledBtn>
+                <StyledBtn onClick={()=>addNewProduct()} size="50%" small color="green">Adicionar</StyledBtn>
             </div>
         </StyledCard>
     )

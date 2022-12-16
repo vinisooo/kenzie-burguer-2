@@ -26,6 +26,8 @@ export const ModalCart = styled.div`
 
     background-color: var(--total-white);
 
+    transition: 0.4s ease;
+
     position: relative;
 
     header{

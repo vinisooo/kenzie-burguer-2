@@ -10,11 +10,10 @@ import { MenuContext } from "../../Context/MenuContext";
 
 //
 import { iProduct } from "../../DefaultInterfaces";
+import { Navigate } from "react-router-dom";
 
 
 const Menu = ()=>{
-    
-    const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
 
     const { products, cartModal } = useContext(MenuContext);
 
@@ -24,9 +23,9 @@ const Menu = ()=>{
             <Container>
                 <StyledUl>
                     {
-                        products.map((el: iProduct)=>{
+                        products.map((el: iProduct, index)=>{
                             return(
-                                <Card product={el}/>
+                                <Card key={index} product={el}/>
                             )
                         })
                     }

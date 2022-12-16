@@ -12,12 +12,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 
 //CONTEXT
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../Context/UserContext";
 
 
 //RESOLVER
 import { loginSchema } from "../../resolvers";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormValues{
     email: string;
@@ -33,7 +34,17 @@ const LoginPage = ()=>{
         resolver: yupResolver(loginSchema)
     });
 
+    const navigate = useNavigate();
+
     
+    const tokenID = localStorage.getItem("@kenzie-burguer: logged-user-token");
+
+    useEffect(()=>{
+        if(tokenID){
+            navigate("/menu");
+        }
+    },[]);
+
 
     return(
         <StyledBackground>
