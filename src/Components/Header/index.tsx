@@ -16,13 +16,13 @@ import { MenuContext } from "../../Context/MenuContext";
 
 const Header = ()=>{
 
-    const { cartProducts } = useContext(MenuContext);
+    const { cartProducts, setCartModal } = useContext(MenuContext);
 
     return(
         <StyledHeader>
             <Container>
                 <Link to="/menu">
-                    <img src={logo} alt="Kenzie Burguer" />
+                    <img className="logo" src={logo} alt="Kenzie Burguer" />
                 </Link>
             
                 <nav>
@@ -32,7 +32,7 @@ const Header = ()=>{
                             <img src={searchIcon}/>
                         </StyledBtn>
                     </div>
-                    <button>
+                    <button onClick={()=> setCartModal(true)}>
                         <img src={cartIcon} />
                         <span>{cartProducts.length}</span>
                     </button>

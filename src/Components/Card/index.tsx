@@ -5,19 +5,21 @@ import { StyledBtn } from "../../Styles/DefaultBtn";
 import { useContext } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 
+//
+import { iProduct } from "../../DefaultInterfaces";
 
-interface iProduct{
-    product: any;
+interface iProps{
+    product: iProduct;
 }
 
-const Card = ({product}: iProduct)=>{
+const Card = ({product}: iProps)=>{
 
     const { cartProducts, addToCart } = useContext(MenuContext);
 
     return(
         <StyledCard>
             <figure>
-                <img src={product.img} alt={product.title} />
+                <img src={product.img} alt={product.name} />
             </figure>
             <div>
                 <h3>{product.name}</h3>

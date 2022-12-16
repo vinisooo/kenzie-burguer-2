@@ -2,19 +2,16 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { kenzieBurguerAPI } from "../api/kenzieBurguerApi";
 
-
-interface iProduct{
-    id: number;
-    name: string;
-    category: string;
-    price: number;
-    imbg: string;
-}
+//
+import { iProduct } from "../DefaultInterfaces";
 
 interface iExportsValues{
     products: iProduct[];
     cartProducts: iProduct[];
     addToCart: (product: iProduct)=>void;
+    cartModal: boolean;
+    setCartModal: React.Dispatch<React.SetStateAction<boolean>>
+    removeSameFromCart: (product: iProduct) => void;
 }
 
 interface iMenuProvider{
@@ -29,6 +26,7 @@ const MenuProvider = ({children}: iMenuProvider)=>{
 
     const [ products, setProducts ] = useState([] as iProduct[]);
     const [ cartProducts, setCartProducts ] = useState([] as iProduct[]);
+    const [ cartModal, setCartModal ] = useState<boolean>(false)
 
     const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
 
@@ -58,9 +56,17 @@ const MenuProvider = ({children}: iMenuProvider)=>{
     const addToCart = (product: iProduct)=>{
         setCartProducts([...cartProducts, product]);
     }
+
+    const removeSameFromCart = (product: iProduct)=>{
+        setCartProducts(
+            cartProducts.filter((el: iProduct)=>{
+                return el.id !== product.id
+            })
+        );
+    }
     
     return(
-        <MenuContext.Provider value={{products, cartProducts, addToCart}}>
+        <MenuContext.Provider value={{products, cartProducts, addToCart, cartModal, setCartModal, removeSameFromCart}}>
             {children}
         </MenuContext.Provider>
     )

@@ -1,10 +1,17 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const StyledHeader = styled.header`
 
     width: 100vw;
 
     background-color: var(--color-grey-0);
+
+    z-index: 3;
+
+    .logo{   
+        width: 158.94px;
+    }
 
     div{
         display: flex;
@@ -31,6 +38,14 @@ export const StyledHeader = styled.header`
 
         width: 365px;
         border-radius: 8px;
+
+        display: none;
+    }
+
+    @media (min-width: 700px) {
+        nav > div{
+            display: flex;
+        }
     }
 
     nav >div >input{
