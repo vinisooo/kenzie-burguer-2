@@ -17,5 +17,5 @@ export const registerSchema = yup.object().shape({
         .matches(/(?=.*[0-9])/, "Sua senha precisa ter no mínimo um número")
         .matches(/([^A-Za-z0-9])/, "Sua senha precisa ter no mínimo um caractere especial"),
     confPassword: yup.string().required("Confirmação de senha obrigatória")
-        .oneOf([yup.ref("password")], 'Your passwords do not match.')
+        .oneOf([yup.ref("password")], "As senhas devem coincidir.")
 })

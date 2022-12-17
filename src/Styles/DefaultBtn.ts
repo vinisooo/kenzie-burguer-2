@@ -43,6 +43,13 @@ export const StyledLink = styled(Link)<iButtonProps>`
     font-size: 16px;
     line-height: 28px;
 
+    display: flex;
+    justify-content: center;
+
+    text-align: center;
+    text-decoration: none;
+
+
     border: none;
 
     width: ${(props)=> props.size? props.size : "100%"};
