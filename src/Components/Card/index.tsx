@@ -30,7 +30,7 @@ const Card = ({product}: iProps)=>{
                 <h3>{product.name}</h3>
                 <p>{product.category}</p>
                 <span>R${product.price.toFixed(2)}</span>
-                <StyledBtn onClick={()=>addNewProduct()} size="50%" small color="green">Adicionar</StyledBtn>
+                <StyledBtn onClick={()=>addNewProduct()} size="50%" small>Adicionar</StyledBtn>
             </div>
         </StyledCard>
     )

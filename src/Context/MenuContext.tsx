@@ -66,8 +66,6 @@ const MenuProvider = ({children}: iMenuProvider)=>{
 
     //CART
     const addToCart = (product: iProduct)=>{
-        // const cartID = cartProducts.length > 0? cartProducts[cartProducts.length -1].cartID + 1 : 0;
-
 
         const auxArr = [...cartProducts]; 
         const getProduct = auxArr.find((el)=>{

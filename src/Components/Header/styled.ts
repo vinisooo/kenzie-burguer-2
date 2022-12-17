@@ -9,6 +9,8 @@ export const StyledHeader = styled.header`
 
     z-index: 3;
 
+    position: fixed;
+
     .logo{   
         width: 158.94px;
     }

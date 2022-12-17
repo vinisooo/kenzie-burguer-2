@@ -7,6 +7,9 @@ export const StyledUl = styled.ul`
 
     gap: 50px;
 
+    padding-top: 100px;
+    padding-bottom: 50px;
+
     @media (min-width: 700px){
         flex-wrap: wrap;
         overflow-x: hidden;

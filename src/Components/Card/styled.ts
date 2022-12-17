@@ -24,6 +24,8 @@ export const StyledCard = styled.li`
         display: flex;
         align-items: center;
         justify-content: center;
+
+        background-color: var(--color-grey-0);
     }
 
     figure img{
@@ -65,6 +67,15 @@ export const StyledCard = styled.li`
         line-height: 24px;
 
         color: var(--color-primary);
+    }
+
+    div button{
+        background-color: #BDBDBD;
+        color: var(--total-white);
+    }
+
+    :hover div button{
+        background-color: var(--color-primary);
     }
 
 `
