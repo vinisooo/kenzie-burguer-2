@@ -25,8 +25,10 @@ export const StyledHeader = styled.header`
     div > nav{
         display: flex;
         align-items: center;
+        justify-content: flex-end;
 
         gap: 20px;
+        width: 100%;
     }
             
     nav >div{
@@ -36,15 +38,23 @@ export const StyledHeader = styled.header`
         background-color: var(--total-white);
         height: 60px;
 
-        width: 365px;
+        width: 100%;
         border-radius: 8px;
 
         display: none;
     }
+    
 
     @media (min-width: 700px) {
+
+        div > nav{
+            width: 60%;
+        }
+
         nav > div{
             display: flex;
+
+            width: 376px;
         }
     }
 
@@ -80,5 +90,22 @@ export const StyledHeader = styled.header`
     img{
         pointer-events: none;
     }
+
+    @media (max-width: 700px) {
+        .mob-input{
+            display: none;
+        }
+        .show-input{
+            display: flex;
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 700px){
+        .mob-btn{
+            display: none;
+        }
+    }
+
     
 `

@@ -15,6 +15,10 @@ interface iExportsValues{
     removeFromCart: (product: iProduct) =>void;
     totalPrice: number;
     removeAllFromCart: ()=> void;
+    search: string;
+    setSearch: React.Dispatch<React.SetStateAction<string>>
+    getFiltered: ()=> iProduct[]; 
+    getProducts: (token: string) => void;
 }
 
 interface iMenuProvider{
@@ -33,7 +37,7 @@ const MenuProvider = ({children}: iMenuProvider)=>{
     const [ cartModal, setCartModal ] = useState<boolean>(false);
     const [ totalPrice, setTotalPrice ] = useState(0);
     
-    const [ filter,setFilter ] = useState<string>("");
+    const [ search,setSearch ] = useState<string>("");
 
     const token = localStorage.getItem("@kenzie-burguer: logged-user-token");
 
@@ -94,9 +98,7 @@ const MenuProvider = ({children}: iMenuProvider)=>{
     
 
     const removeFromCart = (product: iProduct)=>{
-        // setCartProducts(cartProducts.filter((el: iProduct)=>{
-        //     return el.cartID !== product.cartID;
-        // }))
+
         const auxArr = [...cartProducts]; 
         const getProduct = auxArr.find((el)=>{
             return el.id === product.id
@@ -117,20 +119,34 @@ const MenuProvider = ({children}: iMenuProvider)=>{
         setCartProducts([]);
     }
 
-
     const getTotalPrice = ()=>{
-        const priceCalc = cartProducts.map((a,b: any)=>{
-            return a + b.price
-        },0)
+        const priceCalc = cartProducts.reduce((a: any,b: iProduct)=>{
+            return a + (b.price * b.counter);
+        },0);
 
         setTotalPrice(priceCalc);
     }
     useEffect(()=>{
         getTotalPrice();
     })
+    
+
+    //FILTER PRODUCTS
+    const getFiltered = ()=>{
+        if(search.trim() === ""){
+            return products;
+        }else{
+            const filteredArr = products.filter((el)=>{
+                return el.name.toLowerCase().includes(search.toLowerCase()) ||
+                    el.category.toLowerCase().includes(search.toLowerCase())
+            })
+
+            return filteredArr;
+        }
+    }
 
     return(
-        <MenuContext.Provider value={{products, cartProducts, addToCart, cartModal, setCartModal, removeSameFromCart, totalPrice, removeFromCart, removeAllFromCart}}>
+        <MenuContext.Provider value={{products, cartProducts, addToCart, cartModal, setCartModal, removeSameFromCart, totalPrice, removeFromCart, removeAllFromCart, search, setSearch, getFiltered, getProducts}}>
             {children}
         </MenuContext.Provider>
     )

@@ -4,6 +4,10 @@ import { kenzieBurguerAPI } from "../api/kenzieBurguerApi";
 
 import { useNavigate } from "react-router-dom";
 
+import { useContext } from "react";
+import { MenuContext } from "./MenuContext";
+
+
 interface iExportValues{
     submitLogin: (data: object)=> void;
     submitRegister: (data: object)=> void;
@@ -22,17 +26,20 @@ const UserProvider = ({children}: iUserProviderProps)=>{
 
     const [ user, setUser ] = useState({});
 
+    const { getProducts } = useContext(MenuContext);
 
 
     //LOGIN
     const login = async(data: object)=>{
         try{
             const request = await kenzieBurguerAPI.post("/login", data);
-
+                    
             navigate("/menu");
-            
             setUser(request);
-            localStorage.setItem("@kenzie-burguer: logged-user-token", request.data.accessToken)
+            const token = request.data.accessToken;
+
+            localStorage.setItem("@kenzie-burguer: logged-user-token", token);
+            getProducts(token);
         }catch(err: any){
             if(err.response.data === "Incorrect password"){
                 toast.error("Senha incorreta");
@@ -47,13 +54,13 @@ const UserProvider = ({children}: iUserProviderProps)=>{
 
     //REGISTER
 
-    const register = async(data: object)=>{
-        try{
-            const request = await kenzieBurguerAPI.post("/users",data)
-
+    const register = async(data: object)=>{                     
+        try{                                        
+            const request = await kenzieBurguerAPI.post("/users",data);
+                                                                    
             toast.success("Cadastro realizado com sucesso");
-            navigate("/login");
-        }catch(err:any){
+            navigate("/login");         
+        }catch(err:any){            
             if(err.response.data === "Email already exists"){
                 toast.error("Este Email já está cadastrado")
             }

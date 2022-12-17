@@ -11,11 +11,11 @@ const ProviderContext = ({children}: iProviderProps)=>{
 
     return(
         <>
-            <UserProvider>
-                <MenuProvider>
+            <MenuProvider>
+                <UserProvider>
                     {children}
-                </MenuProvider>
-            </UserProvider>
+                </UserProvider>
+            </MenuProvider>
         </>
     )
 
