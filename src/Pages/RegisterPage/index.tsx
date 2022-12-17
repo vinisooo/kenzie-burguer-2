@@ -38,7 +38,7 @@ const RegisterPage = ()=>{
         <StyledBackground>
             <LogContainer>
                 <LogFigure/>
-                <Form title="Cadastro" submitCallBack={handleSubmit(submitRegister)}>
+                <Form title="Cadastro" submitCallBack={handleSubmit(submitRegister)} link="/login" linkTitle="Retornar para o login">
                     <InputBox errors={errors.name?.message} register={register("name")} label="Nome" type="text" />
                     <InputBox errors={errors.email?.message} register={register("email")} label="Email" type="text" />
                     <InputBox errors={errors.password?.message} register={register("password")} label="Senha" type="password" />

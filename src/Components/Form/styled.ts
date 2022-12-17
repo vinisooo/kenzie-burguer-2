@@ -1,4 +1,5 @@
 import styled  from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const StyledForm = styled.form`
 
@@ -17,6 +18,10 @@ export const StyledForm = styled.form`
 
     padding: 26px 24px;
 
+    header{
+        display: flex;
+        justify-content: space-between;
+    }
 
     header h1{
         text-align: start;
